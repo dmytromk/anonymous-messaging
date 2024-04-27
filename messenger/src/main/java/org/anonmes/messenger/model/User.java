@@ -3,12 +3,14 @@ package org.anonmes.messenger.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
 public class User {
     @Column(name = "id")
     @Id
@@ -21,4 +23,7 @@ public class User {
     @Column(name = "created_at")
     @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;
+    public User(Long id) {
+        this.id = id;
+    }
 }
