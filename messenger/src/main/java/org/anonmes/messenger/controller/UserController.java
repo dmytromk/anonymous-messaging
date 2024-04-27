@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/users") //or some other mapping
+@RequestMapping("/users") //or some other mapping
 public class UserController {
     private final UserService userService;
 
