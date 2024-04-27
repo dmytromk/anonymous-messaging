@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: Mykhailo Tyshchenko
+      changes:
+        - createTable:
+            tableName: messages
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: content
+                  type: varchar(4096)
+              - column:
+                  name: from_user
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: from_user_fk
+                    references: users(id)
+                    deleteCascade: true
+              - column:
+                  name: to_user
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: to_user_fk
+                    references: users(id)
+                    deleteCascade: true
+              - column:
+                  name: created_at
+                  type: timestamp
