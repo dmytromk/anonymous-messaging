@@ -3,6 +3,7 @@ package org.anonmes.messenger.service;
 import lombok.RequiredArgsConstructor;
 import org.anonmes.messenger.dto.UserCreateDTO;
 import org.anonmes.messenger.dto.UserResponseDTO;
+import org.anonmes.messenger.dto.UserUpdateNameDTO;
 import org.anonmes.messenger.mapper.UserMapper;
 import org.anonmes.messenger.model.User;
 import org.anonmes.messenger.repository.UserRepository;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -29,5 +32,24 @@ public class UserServiceImpl implements UserService {
         user.setCreatedAt(LocalDateTime.now());
         User save = repository.save(user);
         return userMapper.toResponse(save);
+    }
+
+    @Override
+    public void delete(Long userId) {
+        repository.deleteById(userId);
+    }
+
+    @Override
+    public UserResponseDTO update(UserUpdateNameDTO updateUser) {
+        Optional<User> userOptional = repository.findById(updateUser.getId());
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setName(updateUser.getName());
+            User updated = repository.save(user);
+            return userMapper.toResponse(updated);
+        }
+        //TODO: null might be stupid to return if update somehow is unsuccessful,
+        // maybe use ResponseEntity<> (if not here, then in the controller)?
+        return null;
     }
 }
