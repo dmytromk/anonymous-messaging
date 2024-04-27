@@ -1,6 +1,8 @@
 package org.anonmes.messenger.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.anonmes.messenger.dto.UserCreateDTO;
+import org.anonmes.messenger.dto.UserResponseDTO;
 import org.anonmes.messenger.model.User;
 import org.anonmes.messenger.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +15,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class UserController {
-    public UserService userService;
-
+    private final UserService userService;
     @PostMapping
-    public User createUser(@RequestBody User user) {
+    public UserResponseDTO createUser(@RequestBody UserCreateDTO user) {
         return userService.save(user);
     }
-
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserResponseDTO> getAllUsers() {
         return userService.getAll();
     }
 }

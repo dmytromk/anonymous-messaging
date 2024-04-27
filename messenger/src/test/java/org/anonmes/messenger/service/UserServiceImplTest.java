@@ -1,5 +1,7 @@
 package org.anonmes.messenger.service;
 
+import org.anonmes.messenger.dto.UserCreateDTO;
+import org.anonmes.messenger.dto.UserResponseDTO;
 import org.anonmes.messenger.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,19 +26,20 @@ class UserServiceImplTest {
 
     @Test
     void getAll() {
-        User user1 = new User();
-        User user2 = new User();
-        userService.save(user1);
-        userService.save(user2);
-        assertTrue(userService.getAll().containsAll(List.of(user1, user2)));
+        UserCreateDTO user1 = new UserCreateDTO();
+        UserCreateDTO user2 = new UserCreateDTO();
+        UserResponseDTO saved1 = userService.save(user1);
+        UserResponseDTO saved2 = userService.save(user2);
+        List<UserResponseDTO> all = userService.getAll();
+        assertTrue(all.containsAll(List.of(saved1, saved2)));
     }
 
     @Test
     void save() {
-        User user = new User();
+        UserCreateDTO user = new UserCreateDTO();
         String name = "John";
         user.setName(name);
-        User savedUser = userService.save(user);
+        UserResponseDTO savedUser = userService.save(user);
         assertNotNull(savedUser.getId());
         assertNotNull(savedUser.getCreatedAt());
         assertEquals(name, savedUser.getName());
