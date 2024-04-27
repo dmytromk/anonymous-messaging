@@ -9,4 +9,5 @@ import java.util.List;
 public interface UserService {
     List<UserResponseDTO> getAll();
     UserResponseDTO save(UserCreateDTO user);
+    void delete(Long id);
 }
