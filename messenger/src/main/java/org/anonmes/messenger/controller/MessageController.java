@@ -13,22 +13,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MessageController {
     private final MessageService messageService;
+
+    // TODO: implement getting all messages based on requester id
     public List<MessageResponseDTO> getAllMessages() {
         return messageService.getAllMessages();
     }
-    @GetMapping("/{id}")
-    public List<MessageResponseDTO> getAllMessagesByReceiver(@PathVariable Long id) {
-        return messageService.getAllMessagesByReceiver(id);
-    }
-    @GetMapping("/{id}/pages")
-    public List<MessageResponseDTO> getAllMessagesByReceiver(@PathVariable Long id,
-                                                             @RequestParam Integer page,
-                                                             @RequestParam Integer size) {
-        return messageService.getAllMessagesByReceiver(id, page, size);
+
+    @GetMapping("/{receiver_id}")
+    public List<MessageResponseDTO> getAllMessagesByReceiver(@PathVariable Long receiver_id) {
+        return messageService.getAllMessagesByReceiver(receiver_id);
     }
 
-    @PostMapping("/{id}")
-    public MessageResponseDTO postMessage(@PathVariable Long id, @RequestBody MessageCreateDTO createDTO) {
-        return messageService.postMessage(id, createDTO);
+    @GetMapping("/{receiver_id}/pages")
+    public List<MessageResponseDTO> getAllMessagesByReceiver(@PathVariable Long receiver_id,
+                                                             @RequestParam Integer page,
+                                                             @RequestParam Integer size) {
+        return messageService.getAllMessagesByReceiver(receiver_id, page, size);
+    }
+
+    @PostMapping("/{sender_id}")
+    public MessageResponseDTO postMessage(@PathVariable Long sender_id, @RequestBody MessageCreateDTO createDTO) {
+        return messageService.postMessage(sender_id, createDTO);
     }
 }
