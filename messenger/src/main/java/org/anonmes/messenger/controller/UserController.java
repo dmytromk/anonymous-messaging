@@ -3,7 +3,7 @@ package org.anonmes.messenger.controller;
 import lombok.RequiredArgsConstructor;
 import org.anonmes.messenger.dto.UserCreateDTO;
 import org.anonmes.messenger.dto.UserResponseDTO;
-import org.anonmes.messenger.model.User;
+import org.anonmes.messenger.dto.UserUpdateNameDTO;
 import org.anonmes.messenger.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +29,10 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.delete(id);
+    }
+
+    @PutMapping
+    public UserResponseDTO updateUser(@RequestBody UserUpdateNameDTO user) {
+        return userService.update(user);
     }
 }
