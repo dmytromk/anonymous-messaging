@@ -18,6 +18,10 @@ public class User {
     private String name;
     @Column(name= "email")
     private String email;
+    @Column(name= "password")
+    private String password;
+    @Column(name = "salt")
+    private String salt;
     @Column(name = "created_at")
     @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;
