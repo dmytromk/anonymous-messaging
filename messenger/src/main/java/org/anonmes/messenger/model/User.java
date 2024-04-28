@@ -20,9 +20,16 @@ public class User {
     private String name;
     @Column(name= "email")
     private String email;
+    @Column(name= "password")
+    private String password;
+    @Column(name = "active")
+    private Boolean active;
+    @Column(name = "roles")
+    private String roles;
     @Column(name = "created_at")
     @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;
+    
     public User(Long id) {
         this.id = id;
     }
