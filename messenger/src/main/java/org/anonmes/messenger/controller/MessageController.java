@@ -15,6 +15,7 @@ public class MessageController {
     private final MessageService messageService;
 
     // TODO: implement getting all messages based on requester id
+    @GetMapping
     public List<MessageResponseDTO> getAllMessages() {
         return messageService.getAllMessages();
     }
