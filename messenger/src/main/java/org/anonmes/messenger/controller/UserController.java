@@ -67,7 +67,6 @@ public class UserController {
         return userService.getAll();
     }
 
-    // TODO (optional): cases when the user deletion is unsuccessful
     @Operation(
             summary = "Delete user",
             description = "Delete user given their id.")
@@ -77,10 +76,11 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "user not found")
     })
     @DeleteMapping("/{id}")
-    public void deleteUser(
+    public ResponseEntity<Void> deleteUser(
             @Parameter(description = "Id of user to delete")
             @PathVariable Long id) {
         userService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
     @Operation(
