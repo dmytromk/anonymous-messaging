@@ -19,6 +19,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/messages/")
 @RequiredArgsConstructor
+@CrossOrigin(
+        origins = "http://localhost:3000",
+        methods = {RequestMethod.GET, RequestMethod.OPTIONS, RequestMethod.DELETE, RequestMethod.POST},
+        maxAge=3600
+)
 @Tag(name = "Messages", description = "Messages API")
 public class MessageController {
     private final MessageService messageService;

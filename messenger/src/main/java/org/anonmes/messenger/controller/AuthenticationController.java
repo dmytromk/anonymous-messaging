@@ -22,6 +22,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(
+        origins = "http://localhost:3000",
+        methods = {RequestMethod.GET, RequestMethod.OPTIONS, RequestMethod.DELETE, RequestMethod.POST},
+        maxAge=3600
+)
 @AllArgsConstructor
 @Tag(name = "Authentication", description = "Auth API")
 public class AuthenticationController {

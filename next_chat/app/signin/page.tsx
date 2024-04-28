@@ -1,5 +1,4 @@
 'use client'
-import {useState} from "react";
 import Link from "next/link";
 import Image from 'next/image';
 import axios from "axios";
@@ -9,8 +8,27 @@ export default function Page() {
         try {
             const response = await axios.get('http://localhost:8080/login/google');
             if (response.status === 200) {
-                const jwt = response.data.jwt; // Adjust this path based on your actual response structure
-                Cookies.set('annon_jwt', jwt, { expires: 7 }); // Cookie expires in 7 days
+                const jwt = response.data.jwt;
+
+                Cookies.set('annon_jwt', jwt, { expires: 7 });
+                console.log('JWT stored in cookies');
+            }
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
+    };
+
+    const handleAnon = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/login',
+                {
+                    "email": "mail@gmail.com",
+                    "password": "mailmail"
+                });
+            if (response.status === 200) {
+                const jwt = response.data.jwt;
+
+                Cookies.set('annon_jwt', jwt, { expires: 7 });
                 console.log('JWT stored in cookies');
             }
         } catch (error) {
@@ -36,14 +54,16 @@ export default function Page() {
                         </button>
                     </div>
                     <div className="w-16 h-16 border-2 border-black rounded m-4 p-2">
-                        <Image
-                            src="/logo-anonmes.png"
-                            alt="Anonmes"
-                            width={100}
-                            height={60}
-                            layout="fixed"
-                            className="bg-white"
-                        />
+                        <button onClick={handleAnon}>
+                            <Image
+                                src="/logo-anonmes.png"
+                                alt="Anonmes"
+                                width={100}
+                                height={60}
+                                layout="fixed"
+                                className="bg-white"
+                            />
+                        </button>
                     </div>
                 </div>
                 <div className="mx-4">
