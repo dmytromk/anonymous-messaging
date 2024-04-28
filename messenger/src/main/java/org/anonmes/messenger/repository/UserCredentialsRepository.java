@@ -2,8 +2,11 @@ package org.anonmes.messenger.repository;
 
 import org.anonmes.messenger.model.UserCredentials;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.stereotype.Repository;
 
-@NoRepositoryBean //Temp, remove if needed
+import java.util.Optional;
+
+@Repository
 public interface UserCredentialsRepository extends JpaRepository<UserCredentials, Long> {
+    Optional<UserCredentials> findByEmail(String email);
 }
