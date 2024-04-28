@@ -2,6 +2,7 @@ package org.anonmes.messenger.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,11 +26,16 @@ public class UserController {
 
     @Operation(
             summary = "Create a new user",
-            description = "Create a new user, given their name, email and password")
+            description = "Create a new user, given their name, email and password.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UserResponseDTO.class))})
+                            schema = @Schema(implementation = UserResponseDTO.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "invalid parameters",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserResponseDTO.class))
+                    })
     })
     @PostMapping
     public UserResponseDTO createUser(@Parameter(description = "user to be added")
@@ -39,9 +45,11 @@ public class UserController {
 
     @Operation(
             summary = "Get all users",
-            description = "Get list of all of the users of the messenger")
+            description = "Get list of all of the users of the messenger.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation")
+            @ApiResponse(responseCode = "200", description = "successful operation",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = UserResponseDTO.class)))})
     })
     @GetMapping
     public List<UserResponseDTO> getAllUsers() {
@@ -51,7 +59,7 @@ public class UserController {
     // TODO (optional): cases when the user deletion is unsuccessful
     @Operation(
             summary = "Delete user",
-            description = "Delete user, given their id")
+            description = "Delete user given their id.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation"),
             @ApiResponse(responseCode = "400", description = "invalid id supplied"),
@@ -64,13 +72,17 @@ public class UserController {
 
     @Operation(
             summary = "Update user's name",
-            description = "Update name of the user, given their id and new username")
+            description = "Update name of the user, given their id and new username set in request body respectively.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserResponseDTO.class))}),
-            @ApiResponse(responseCode = "400", description = "invalid id supplied"),
-            @ApiResponse(responseCode = "404", description = "user not found")
+            @ApiResponse(responseCode = "400", description = "invalid id supplied",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserResponseDTO.class))}),
+            @ApiResponse(responseCode = "404", description = "user not found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserResponseDTO.class))})
     })
     @PutMapping
     public UserResponseDTO updateUser(@Parameter(description = "user to be updated with a new name")
