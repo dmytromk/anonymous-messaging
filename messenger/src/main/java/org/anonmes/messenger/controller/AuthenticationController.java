@@ -41,8 +41,10 @@ public class AuthenticationController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = AuthenticationResponseDTO.class))})
     })
-    @PostMapping("/login")
+    @PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
     public AuthenticationResponseDTO loginWithPassword(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Object with user's email and password",
+            content = @Content(schema = @Schema(implementation = LoginPasswordAuthenticationRequestDTO.class)))
             @RequestBody LoginPasswordAuthenticationRequestDTO authenticationRequest) throws Exception {
 
         try {
@@ -64,8 +66,18 @@ public class AuthenticationController {
         return new AuthenticationResponseDTO(jwt);
     }
 
+    @Operation(
+            summary = "Register a new user",
+            description = "Register using email and password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AuthenticationResponseDTO.class))})
+    })
     @PostMapping("/register")
     public AuthenticationResponseDTO registerWithPassword(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User that needs to be created",
+                    content = @Content(schema = @Schema(implementation = UserCreateDTO.class)))
             @RequestBody UserCreateDTO userCreateDTO) {
         User user = new User();
         user.setEmail(userCreateDTO.getEmail());
@@ -84,6 +96,14 @@ public class AuthenticationController {
         return new AuthenticationResponseDTO(jwt);
     }
 
+    @Operation(
+            summary = "Login with Google",
+            description = "Create authentication token for user logging in with Google")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AuthenticationResponseDTO.class))})
+    })
     @GetMapping("/login/google")
     public AuthenticationResponseDTO loginWithGoogle() {
         return null;

@@ -22,6 +22,14 @@ import java.util.List;
 public class MessageController {
     private final MessageService messageService;
 
+    @Operation(
+            summary = "Get all messages",
+            description = "Get all messages sent in the messenger.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))}),
+    })
     @GetMapping
     public List<MessageResponseDTO> getAllMessages() {
         return messageService.getAllMessages();
