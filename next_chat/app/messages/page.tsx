@@ -29,20 +29,27 @@ export default function Page() {
                 <h1 className=" text-3xl font-bold">Your Messages</h1>
                 <Link href="/account" className="text-blue-600">Account</Link>
             </div>
-            <div className="flex flex-row w-full justify-center">
+            <div className="flex flex-row w-full justify-center pb-32">
                 <div className="flex flex-col w-[90vw]">
-                    <ul>
-                        {messages.map((msg, index) => (
-                            <li className="border-gray-200 border-2 rounded-2xl p-4 my-2 w-full" key={index}>
-                                <div className="font-bold mb-2">
-                                    {msg.createdAt.toLocaleString()}
-                                </div>
-                                <div>
-                                    {msg.content}
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                    {
+                        messages.length > 0 ? (
+                            <ul>
+                                {messages.map((msg, index) => (
+                                    <li className="border-gray-200 border-2 rounded-2xl p-4 my-2 w-full" key={index}>
+                                        <div className="font-bold mb-2">
+                                            {msg.createdAt.toLocaleString()}
+                                        </div>
+                                        <div>
+                                            {msg.content}
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No messages :(</p>
+                        )
+                    }
+
                 </div>
             </div>
         </main>
