@@ -1,5 +1,3 @@
-version: "1.0"
-
 services:
   postgres:
     image: 'postgres:16.1-alpine3.19'
@@ -11,11 +9,22 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=anonmes
       - POSTGRES_PASSWORD=local
+
   server:
-    build: .
+    build:
+      context: ./messenger
+      dockerfile: backend.Dockerfile
     ports:
       - 8081:8080
     environment:
       DATASOURCE_URL: "jdbc:postgresql://postgres:5432/anonmes"
       DATASOURCE_USERNAME: "postgres"
       DATASOURCE_PASSWORD: "local"
+      APP_SECRET: "local"
+
+  client:
+    build:
+      context: ./next_chat
+      dockerfile: client.Dockerfile
+    ports:
+      - 3000:3000
