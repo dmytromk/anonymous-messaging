@@ -21,7 +21,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
 @Tag(name = "Users", description = "Users API")
 @RequestMapping("/users")
 public class UserController {
@@ -41,8 +40,14 @@ public class UserController {
                     })
     })
     @PostMapping
-    public UserResponseDTO createUser(@RequestBody UserCreateDTO user) {
-        return userService.save(user);
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserCreateDTO user) {
+        UserResponseDTO saved = userService.save(user);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(saved.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(saved);
     }
 
     @Operation(
@@ -87,7 +92,7 @@ public class UserController {
                             schema = @Schema(implementation = UserResponseDTO.class))})
     })
     @PutMapping
-    public UserResponseDTO updateUser(@RequestBody UserUpdateNameDTO user) {
-        return userService.update(user);
+    public ResponseEntity<UserResponseDTO> updateUser(@RequestBody UserUpdateNameDTO user) {
+        return ResponseEntity.ok(userService.update(user));
     }
 }
