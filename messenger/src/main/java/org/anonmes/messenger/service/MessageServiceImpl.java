@@ -1,6 +1,5 @@
 package org.anonmes.messenger.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.anonmes.messenger.dto.MessageCreateDTO;
 import org.anonmes.messenger.dto.MessageResponseDTO;
