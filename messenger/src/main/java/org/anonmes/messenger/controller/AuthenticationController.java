@@ -1,7 +1,14 @@
 package org.anonmes.messenger.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.anonmes.messenger.dto.AuthenticationRequestDTO;
 import org.anonmes.messenger.dto.AuthenticationResponseDTO;
+import org.anonmes.messenger.dto.MessageResponseDTO;
 import org.anonmes.messenger.service.UserLoginService;
 import org.anonmes.messenger.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Tag(name = "Authentication", description = "Auth API")
 public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final UserLoginService userLoginService;
@@ -25,6 +33,17 @@ public class AuthenticationController {
         this.jwtUtil = jwtUtil;
     }
 
+    @Operation(
+            summary = "Create authentication token",
+            description = "Create authentication token for user with email and password sent in request body")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "successful operation",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MessageResponseDTO.class))}),
+            @ApiResponse(responseCode = "401", description = "incorrect email or password supplied",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MessageResponseDTO.class))})
+    })
     @PostMapping(value = "/authenticate")
     public AuthenticationResponseDTO createAuthenticationToken(
             @RequestBody AuthenticationRequestDTO authenticationRequest) throws Exception {

@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.anonmes.messenger.dto.MessageCreateDTO;
 import org.anonmes.messenger.dto.MessageResponseDTO;
-import org.anonmes.messenger.dto.UserResponseDTO;
 import org.anonmes.messenger.service.MessageService;
 import org.springframework.web.bind.annotation.*;
 
