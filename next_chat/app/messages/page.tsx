@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {Message} from "@/data/Message";
 import {fetchMessages} from "@/data/fetch/fetchData";
 import FloatingButton from "@/ui/button/floating";
+import Link from "next/link";
 
 
 export default function Page() {
@@ -23,7 +24,11 @@ export default function Page() {
     return (
         <main className="p-8">
             <FloatingButton />
-            <h1 className="flex items-center flex-col w-full text-3xl font-bold">Your Messages</h1>
+            <div className="flex items-center flex-row justify-between w-full px-16">
+                <Link href="/" className="text-blue-600">Back</Link>
+                <h1 className=" text-3xl font-bold">Your Messages</h1>
+                <Link href="/account" className="text-blue-600">Account</Link>
+            </div>
             <div className="flex flex-row w-full justify-center">
                 <div className="flex flex-col w-[90vw]">
                     <ul>

@@ -4,3 +4,8 @@ export interface Message {
     content: string,
     createdAt: Date
 }
+
+export interface SendMessage {
+    toEmail: string,
+    content: string
+}
