@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.anonmes.messenger.dto.MessageCreateDTO;
 import org.anonmes.messenger.dto.MessageResponseDTO;
+import org.anonmes.messenger.exception.UserNotFoundException;
 import org.anonmes.messenger.mapper.MessageMapper;
 import org.anonmes.messenger.model.Message;
 import org.anonmes.messenger.model.User;
@@ -51,11 +52,11 @@ public class MessageServiceImpl implements MessageService {
         Message message = mapper.fromCreate(messageCreateDTO);
         if (senderId != null) {
             Optional<User> sender = userRepository.findById(senderId);
-            message.setFrom(sender.orElseThrow(() -> new EntityNotFoundException("No user with id " + senderId)));
+            message.setFrom(sender.orElseThrow(() -> new UserNotFoundException("No user with id " + senderId)));
         }
         Long toId = message.getTo().getId();
         Optional<User> receiver = userRepository.findById(toId);
-        message.setTo(receiver.orElseThrow(() -> new EntityNotFoundException("No user with id " + toId)));
+        message.setTo(receiver.orElseThrow(() -> new UserNotFoundException("No user with id " + toId)));
         message.setCreatedAt(LocalDateTime.now());
         Message saved = repository.save(message);
         return mapper.toResponse(saved);

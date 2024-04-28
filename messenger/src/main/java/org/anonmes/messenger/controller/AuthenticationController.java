@@ -1,7 +1,12 @@
 package org.anonmes.messenger.controller;
 
-import lombok.AllArgsConstructor;
-import org.anonmes.messenger.dto.LoginPasswordAuthenticationRequestDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.anonmes.messenger.dto.AuthenticationRequestDTO;
 import org.anonmes.messenger.dto.AuthenticationResponseDTO;
 import org.anonmes.messenger.dto.UserCreateDTO;
 import org.anonmes.messenger.model.User;
@@ -17,15 +22,28 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
+@Tag(name = "Authentication", description = "Auth API")
 public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final UserCredentialsService userCredentialsService;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
+    @Operation(
+            summary = "Create authentication token",
+            description = "Create authentication token for user with email and password sent in request body")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AuthenticationResponseDTO.class))}),
+            @ApiResponse(responseCode = "401", description = "Incorrect email or password supplied",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AuthenticationResponseDTO.class))})
+    })
     @PostMapping("/login")
     public AuthenticationResponseDTO loginWithPassword(
             @RequestBody LoginPasswordAuthenticationRequestDTO authenticationRequest) throws Exception {
+
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     authenticationRequest.getEmail(),
