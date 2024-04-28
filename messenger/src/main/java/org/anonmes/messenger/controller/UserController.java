@@ -1,6 +1,7 @@
 package org.anonmes.messenger.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -38,7 +39,10 @@ public class UserController {
                     content = @Content)
     })
     @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserCreateDTO user) {
+    public ResponseEntity<UserResponseDTO> createUser(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User that needs to be created",
+                    content = @Content(schema = @Schema(implementation = UserCreateDTO.class)))
+            @RequestBody UserCreateDTO user) {
         UserResponseDTO saved = userService.save(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -61,7 +65,6 @@ public class UserController {
         return userService.getAll();
     }
 
-    // TODO (optional): cases when the user deletion is unsuccessful
     @Operation(
             summary = "Delete user",
             description = "Delete user given their id.")
@@ -71,8 +74,11 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "user not found")
     })
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(
+            @Parameter(description = "Id of user to delete")
+            @PathVariable Long id) {
         userService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
     @Operation(
@@ -89,7 +95,10 @@ public class UserController {
                     content = @Content)
     })
     @PutMapping
-    public ResponseEntity<UserResponseDTO> updateUser(@RequestBody UserUpdateNameDTO user) {
+    public ResponseEntity<UserResponseDTO> updateUser(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User that needs to be updated",
+                    content = @Content(schema = @Schema(implementation = UserUpdateNameDTO.class)))
+            @RequestBody UserUpdateNameDTO user) {
         return ResponseEntity.ok(userService.update(user));
     }
 }

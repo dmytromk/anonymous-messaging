@@ -37,7 +37,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long userId) {
-        repository.deleteById(userId);
+        Optional<User> userOptional = repository.findById(userId);
+        if(userOptional.isPresent()) {
+            repository.deleteById(userId);
+        }
+        throw new UserNotFoundException("Cannot find user by id: " + userId);
     }
 
     @Override
