@@ -20,11 +20,13 @@ public class User {
     private String name;
     @Column(name= "email")
     private String email;
-    @Column(name = "created_at")
 
     @OrderBy
     @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private UserCredentials userCredentials;
     
     public User(Long id) {
         this.id = id;
