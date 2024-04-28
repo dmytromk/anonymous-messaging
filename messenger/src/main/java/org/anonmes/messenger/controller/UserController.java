@@ -1,7 +1,6 @@
 package org.anonmes.messenger.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,15 +30,15 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserResponseDTO.class))
-            }),
+                    }),
             @ApiResponse(responseCode = "400", description = "invalid parameters",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserResponseDTO.class))
                     })
     })
     @PostMapping
-    public UserResponseDTO createUser(@Parameter(description = "user to be added")
-                                      @RequestBody UserCreateDTO user) {
+    public UserResponseDTO createUser(
+            @RequestBody UserCreateDTO user) {
         return userService.save(user);
     }
 
@@ -74,19 +73,18 @@ public class UserController {
             summary = "Update user's name",
             description = "Update name of the user, given their id and new username set in request body respectively.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserResponseDTO.class))}),
-            @ApiResponse(responseCode = "400", description = "invalid id supplied",
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserResponseDTO.class))}),
-            @ApiResponse(responseCode = "404", description = "user not found",
+            @ApiResponse(responseCode = "404", description = "User not found",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserResponseDTO.class))})
     })
     @PutMapping
-    public UserResponseDTO updateUser(@Parameter(description = "user to be updated with a new name")
-                                      @RequestBody UserUpdateNameDTO user) {
+    public UserResponseDTO updateUser(@RequestBody UserUpdateNameDTO user) {
         return userService.update(user);
     }
 }

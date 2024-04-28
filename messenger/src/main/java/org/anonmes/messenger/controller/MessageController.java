@@ -32,13 +32,13 @@ public class MessageController {
             summary = "Get all messages by receiver",
             description = "Get all messages that are sent to receiver (not sent by them) with given id.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))}),
-            @ApiResponse(responseCode = "400", description = "invalid id supplied",
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied",
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))}),
-            @ApiResponse(responseCode = "404", description = "user not found",
+            @ApiResponse(responseCode = "404", description = "User not found",
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))})
     })
@@ -52,13 +52,13 @@ public class MessageController {
             description = "Get all messages in range (set by page and size parameters) " +
                     "that are sent to receiver (not sent by them) with given id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))}),
-            @ApiResponse(responseCode = "400", description = "invalid parameters supplied",
+            @ApiResponse(responseCode = "400", description = "Invalid parameters supplied",
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))}),
-            @ApiResponse(responseCode = "404", description = "user not found or page not found",
+            @ApiResponse(responseCode = "404", description = "User not found or page not found",
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))})
     })
@@ -73,15 +73,16 @@ public class MessageController {
             summary = "Send message",
             description = "Send message from user with id of sender_id. Receiver's id and content are set in request body respectively.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponseDTO.class))}),
-            @ApiResponse(responseCode = "400", description = "invalid parameters supplied",
+            @ApiResponse(responseCode = "400", description = "Invalid parameters supplied",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponseDTO.class))}),
-            @ApiResponse(responseCode = "404", description = "user(s) not found",
+            @ApiResponse(responseCode = "404", description = "User(s) not found",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponseDTO.class))})
     })
     @PostMapping("/{sender_id}")
-    public MessageResponseDTO postMessage(@PathVariable Long sender_id, @RequestBody MessageCreateDTO createDTO) {
+    public MessageResponseDTO postMessage(@PathVariable Long sender_id,
+                                          @RequestBody MessageCreateDTO createDTO) {
         return messageService.postMessage(sender_id, createDTO);
     }
 }
