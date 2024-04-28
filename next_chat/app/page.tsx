@@ -16,7 +16,7 @@ export default function Home() {
             <h2 className="text-2xl font-bold">Welcome to Anonmes!</h2>
             <p className="p-4">Anonymous chat, where you never know who is talking to you 🤫</p>
             <Link href="/messages">
-                <div className="w-32 h-12 text-center text-white font-bold bg-blue-500 rounded flex flex-col justify-center">
+                <div className="w-32 h-12 text-center text-white font-bold bg-blue-500 hover:bg-blue-600 rounded flex flex-col justify-center">
                     Get started!
                 </div>
             </Link>
