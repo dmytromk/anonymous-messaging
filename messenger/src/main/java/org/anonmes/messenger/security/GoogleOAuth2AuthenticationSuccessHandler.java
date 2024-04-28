@@ -42,6 +42,7 @@ public class GoogleOAuth2AuthenticationSuccessHandler extends
             // if user exists, generate token
             if (userCredentials.isPresent()) {
                 String jwt = jwtUtil.generateToken(userCredentials.get().getEmail());
+                jwt = "{ " + "\"jwt\": \"" + jwt + "\"}";
                 response.getWriter().write(jwt);
                 response.getWriter().flush();
             } else {
@@ -51,6 +52,7 @@ public class GoogleOAuth2AuthenticationSuccessHandler extends
                 user.setCreatedAt(java.time.LocalDateTime.now());
                 userCredentialsService.saveUser(user, "google");
                 String jwt = jwtUtil.generateToken(user.getEmail());
+                jwt = "{ " + "\"jwt\": \"" + jwt + "\"}";
                 response.getWriter().write(jwt);
                 response.getWriter().flush();
             }

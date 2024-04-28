@@ -80,6 +80,7 @@ public class AuthenticationController {
                     content = @Content(schema = @Schema(implementation = UserCreateDTO.class)))
             @RequestBody UserCreateDTO userCreateDTO) {
         User user = new User();
+        user.setName(userCreateDTO.getName());
         user.setEmail(userCreateDTO.getEmail());
         user.setCreatedAt(java.time.LocalDateTime.now());
 
@@ -87,8 +88,8 @@ public class AuthenticationController {
         userCredentials.setEmail(userCreateDTO.getEmail());
         userCredentials.setPassword(passwordEncoder.encode(userCreateDTO.getPassword()));
         userCredentials.setActive(true);
-        userCredentials.setPassword(userCreateDTO.getPassword());
         userCredentials.setRole("USER");
+        userCredentials.setProvider("password");
         userCredentials.addUser(user);
         userCredentialsService.save(userCredentials);
 
