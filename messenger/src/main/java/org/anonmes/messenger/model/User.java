@@ -20,13 +20,9 @@ public class User {
     private String name;
     @Column(name= "email")
     private String email;
-    @Column(name= "password")
-    private String password;
-    @Column(name = "active")
-    private Boolean active = true;
-    @Column(name = "roles")
-    private String roles = "USER";
     @Column(name = "created_at")
+
+    @OrderBy
     @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;
     

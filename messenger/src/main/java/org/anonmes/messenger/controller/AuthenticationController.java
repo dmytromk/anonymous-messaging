@@ -1,5 +1,6 @@
 package org.anonmes.messenger.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.anonmes.messenger.dto.LoginPasswordAuthenticationRequestDTO;
 import org.anonmes.messenger.dto.AuthenticationResponseDTO;
@@ -12,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final UserLoginService userLoginService;

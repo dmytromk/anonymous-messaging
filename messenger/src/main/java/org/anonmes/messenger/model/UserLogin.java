@@ -21,11 +21,6 @@ public class UserLogin implements UserDetails {
 
     public UserLogin(User user) {
         userName = user.getEmail();
-        password = user.getPassword();
-        active = user.getActive();
-        authorities = Arrays.stream(user.getRoles().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
     }
 
     public UserLogin(String userName) {
