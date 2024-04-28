@@ -19,3 +19,4 @@ services:
       DATASOURCE_URL: "jdbc:postgresql://postgres:5432/anonmes"
       DATASOURCE_USERNAME: "postgres"
       DATASOURCE_PASSWORD: "local"
+      APP_SECRET: "local"
