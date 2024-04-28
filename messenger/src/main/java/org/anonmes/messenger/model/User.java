@@ -24,8 +24,8 @@ public class User {
     private String password;
     @Column(name = "active")
     private Boolean active;
-    @Column(name = "roles")
-    private String roles;
+    @Column(name = "role")
+    private String role;
     @Column(name = "created_at")
     @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;

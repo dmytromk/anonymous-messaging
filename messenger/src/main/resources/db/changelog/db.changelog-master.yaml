@@ -5,3 +5,5 @@ databaseChangeLog:
       file: db/changelog/changes/02-create-message-table.yaml
   - include:
       file: db/changelog/changes/03-make-sender-nullable.yaml
+  - include:
+      file: db/changelog/changes/04-create-password-salt-rows.yaml
