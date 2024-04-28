@@ -30,7 +30,7 @@ public class UserCredentials {
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public void addUser(@NotNull User user) {

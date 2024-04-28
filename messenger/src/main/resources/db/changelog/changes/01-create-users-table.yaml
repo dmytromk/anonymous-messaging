@@ -19,6 +19,8 @@ databaseChangeLog:
               - column:
                   name: email
                   type: varchar(255)
+                  constraints:
+                    unique: true
               - column:
                   name: created_at
                   type: timestamp
