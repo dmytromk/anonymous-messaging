@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class MessageCreateDTO {
-    private Long toId;
+    private String toEmail;
     private String content;
 }

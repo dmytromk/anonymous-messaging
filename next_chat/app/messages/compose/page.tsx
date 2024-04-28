@@ -2,6 +2,7 @@
 import {SendMessage} from "@/data/Message";
 import {FormEvent, useState} from "react";
 import axios from "axios";
+import Link from "next/link";
 
 export default function Page() {
     const [toEmail, setToEmail] = useState('');
@@ -59,6 +60,11 @@ export default function Page() {
                 >
                     Send Message
                 </button>
+                <div className="pt-8 text-blue-600">
+                    <Link href="/messages">
+                        Back
+                    </Link>
+                </div>
             </form>
         </div>
     );
