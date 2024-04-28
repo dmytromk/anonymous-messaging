@@ -2,16 +2,16 @@ FROM eclipse-temurin:21-jdk-alpine as builder
 
 WORKDIR /app
 
-COPY messenger/.mvn/ ./.mvn
-COPY messenger/mvnw ./mvnw
-COPY messenger/pom.xml ./pom.xml
+COPY .mvn/ ./.mvn
+COPY mvnw ./mvnw
+COPY pom.xml ./pom.xml
 
 # make sure that u+ is what we need
 RUN chmod u+x ./mvnw
 
 RUN ./mvnw dependency:go-offline --batch-mode
 
-COPY messenger/src/ ./src
+COPY src/ ./src
 
 RUN ./mvnw clean install -Dmaven.test.skip=true
 
