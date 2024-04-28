@@ -1,6 +1,7 @@
 package org.anonmes.messenger.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -78,7 +79,7 @@ public class MessageController {
 
     @Operation(
             summary = "Send message",
-            description = "Send message from user with id of sender_id. Receiver's id and content are set in request body respectively.")
+            description = "Send message from sender_id user to toId user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponseDTO.class))}),
@@ -88,7 +89,9 @@ public class MessageController {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponseDTO.class))})
     })
     @PostMapping("/{sender_id}")
-    public MessageResponseDTO postMessage(@PathVariable Long sender_id,
+    public MessageResponseDTO postMessage(@PathVariable
+                                          @Parameter(description = "Id of sending user") Long sender_id,
+                                          @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Object containing receiver's id and message content")
                                           @RequestBody MessageCreateDTO createDTO) {
         return messageService.postMessage(sender_id, createDTO);
     }
