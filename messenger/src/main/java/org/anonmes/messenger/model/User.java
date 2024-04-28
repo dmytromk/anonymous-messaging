@@ -20,12 +20,6 @@ public class User {
     private String name;
     @Column(name= "email")
     private String email;
-    @Column(name= "password")
-    private String password;
-    @Column(name = "active")
-    private Boolean active;
-    @Column(name = "role")
-    private String role;
     @Column(name = "created_at")
     @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;

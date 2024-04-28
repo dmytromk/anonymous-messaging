@@ -122,9 +122,6 @@
                 <version>4.23.0</version>
                 <configuration>
                     <propertyFile>src/main/resources/liquibase.properties</propertyFile>
-                    <url>${env.DATASOURCE_URL}</url>
-                    <username>${env.DATASOURCE_USERNAME}</username>
-                    <password>${env.DATASOURCE_PASSWORD}</password>
                 </configuration>
             </plugin>
             <plugin>
