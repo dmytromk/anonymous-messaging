@@ -5,19 +5,32 @@ import org.anonmes.messenger.dto.UserCreateDTO;
 import org.anonmes.messenger.dto.UserResponseDTO;
 import org.anonmes.messenger.dto.UserUpdateNameDTO;
 import org.anonmes.messenger.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users") //or some other mapping
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public UserResponseDTO createUser(@RequestBody UserCreateDTO user) {
-        return userService.save(user);
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserCreateDTO user) {
+        UserResponseDTO save = userService.save(user);
+        URI location = getUri(save);
+        return ResponseEntity.created(location).body(save);
+    }
+
+    private static URI getUri(UserResponseDTO save) {
+        return ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(save.getId())
+                .toUri();
     }
 
     @GetMapping
@@ -32,7 +45,7 @@ public class UserController {
     }
 
     @PutMapping
-    public UserResponseDTO updateUser(@RequestBody UserUpdateNameDTO user) {
-        return userService.update(user);
+    public ResponseEntity<UserResponseDTO> updateUser(@RequestBody UserUpdateNameDTO user) {
+        return ResponseEntity.ok(userService.update(user));
     }
 }

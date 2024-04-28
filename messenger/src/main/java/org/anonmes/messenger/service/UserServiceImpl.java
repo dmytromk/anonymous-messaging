@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.anonmes.messenger.dto.UserCreateDTO;
 import org.anonmes.messenger.dto.UserResponseDTO;
 import org.anonmes.messenger.dto.UserUpdateNameDTO;
+import org.anonmes.messenger.exception.UserNotFoundException;
 import org.anonmes.messenger.mapper.UserMapper;
 import org.anonmes.messenger.model.User;
 import org.anonmes.messenger.repository.UserRepository;
@@ -48,8 +49,6 @@ public class UserServiceImpl implements UserService {
             User updated = repository.save(user);
             return userMapper.toResponse(updated);
         }
-        //TODO: null might be stupid to return if update somehow is unsuccessful,
-        // maybe use ResponseEntity<> (if not here, then in the controller)?
-        return null;
+        throw new UserNotFoundException("Cannot find user by id: " + updateUser.getId());
     }
 }
