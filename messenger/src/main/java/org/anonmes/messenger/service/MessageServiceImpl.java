@@ -49,14 +49,15 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public MessageResponseDTO postMessage(Long senderId, MessageCreateDTO messageCreateDTO) {
-        Message message = mapper.fromCreate(messageCreateDTO);
+        Message message = new Message();
+        message.setContent(messageCreateDTO.getContent());
         if (senderId != null) {
             Optional<User> sender = userRepository.findById(senderId);
             message.setFrom(sender.orElseThrow(() -> new UserNotFoundException("No user with id " + senderId)));
         }
         Long toId = message.getTo().getId();
-        Optional<User> receiver = userRepository.findById(toId);
-        message.setTo(receiver.orElseThrow(() -> new UserNotFoundException("No user with id " + toId)));
+        Optional<User> receiver = userRepository.findUserByEmail(messageCreateDTO.getToEmail());
+        message.setTo(receiver.orElseThrow(() -> new UserNotFoundException("No user with email " + toId)));
         message.setCreatedAt(LocalDateTime.now());
         Message saved = repository.save(message);
         return mapper.toResponse(saved);

@@ -12,7 +12,4 @@ public interface MessageMapper {
 
     @Mapping(source = "to", target = "toId", qualifiedByName = "userToId")
     MessageResponseDTO toResponse(Message message);
-
-    @Mapping(source = "toId", target = "to", qualifiedByName = "userById")
-    Message fromCreate(MessageCreateDTO createDTO);
 }

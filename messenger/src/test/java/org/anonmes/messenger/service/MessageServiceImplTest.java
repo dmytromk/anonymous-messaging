@@ -42,7 +42,7 @@ class MessageServiceImplTest {
         List<UserResponseDTO> users = generateAndSaveUsers(List.of("Alice", "Bob"));
         UserResponseDTO alice = users.get(0);
         UserResponseDTO bob = users.get(1);
-        MessageCreateDTO message = insertions.generateMessage(bob.getId(), "Hello, Bob!");
+        MessageCreateDTO message = insertions.generateMessage(bob.getName(), "Hello, Bob!");
         MessageResponseDTO messageResponse = messageService.postMessage(alice.getId(), message);
 
         assertTrue(messageService.getAllMessages().contains(messageResponse),
@@ -55,7 +55,7 @@ class MessageServiceImplTest {
         UserResponseDTO u1 = users.get(0);
         UserResponseDTO u2 = users.get(1);
         int numberOfMessages = 4;
-        List<MessageCreateDTO> messagesToU2 = insertions.generateMessages(u2.getId(), "Hello", numberOfMessages);
+        List<MessageCreateDTO> messagesToU2 = insertions.generateMessages(u2.getName(), "Hello", numberOfMessages);
         List<MessageResponseDTO> savedMessages = insertions.saveAll(messagesToU2,
                 m -> messageService.postMessage(u1.getId(), m));
         List<MessageResponseDTO> u2Received = messageService.getAllMessagesByReceiver(u2.getId());
@@ -73,7 +73,7 @@ class MessageServiceImplTest {
         UserResponseDTO u2 = users.get(1);
         int numberOfMessages = 5;
         int pageSize = 2;
-        List<MessageCreateDTO> messagesToU2 = insertions.generateMessages(u2.getId(), "Hello", numberOfMessages);
+        List<MessageCreateDTO> messagesToU2 = insertions.generateMessages(u2.getName(), "Hello", numberOfMessages);
         List<MessageResponseDTO> savedMessages = insertions.saveAll(messagesToU2,
                 m -> messageService.postMessage(u1.getId(), m));
 
@@ -99,7 +99,7 @@ class MessageServiceImplTest {
         UserResponseDTO carl = users.get(0);
         UserResponseDTO david = users.get(1);
         String content = "Hello, David";
-        MessageCreateDTO messageToDavid = insertions.generateMessage(david.getId(), content);
+        MessageCreateDTO messageToDavid = insertions.generateMessage(david.getName(), content);
         MessageResponseDTO posted = messageService.postMessage(carl.getId(), messageToDavid);
         assertEquals(david.getId(), posted.getToId());
         assertNotNull(posted.getCreatedAt());
@@ -108,15 +108,15 @@ class MessageServiceImplTest {
     @Test
     void testAnonymous() {
         List<UserResponseDTO> users = generateAndSaveUsers(List.of("Erica"));
-        UserResponseDTO erica = users.get(0);
+        UserResponseDTO erica = users.getFirst();
         String content = "Anonymous hello";
-        MessageCreateDTO message = insertions.generateMessage(erica.getId(), content);
+        MessageCreateDTO message = insertions.generateMessage(erica.getName(), content);
 
         messageService.postMessage(null, message);
 
         List<MessageResponseDTO> ericaMessages = messageService.getAllMessagesByReceiver(erica.getId());
         assertEquals(1, ericaMessages.size());
-        assertEquals(content, ericaMessages.get(0).getContent());
+        assertEquals(content, ericaMessages.getFirst().getContent());
 
     }
 }

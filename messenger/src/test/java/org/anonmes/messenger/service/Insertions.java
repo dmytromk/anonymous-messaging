@@ -15,6 +15,7 @@ public class Insertions {
                 .map(name -> {
                     UserCreateDTO userCreateDTO = new UserCreateDTO();
                     userCreateDTO.setName(name);
+                    userCreateDTO.setEmail(name+"@mail.com");
                     return userCreateDTO;
                 }
                 ).toList();
@@ -23,14 +24,14 @@ public class Insertions {
         return models.stream().map(saver).toList();
     }
 
-    public MessageCreateDTO generateMessage(Long to, String content) {
+    public MessageCreateDTO generateMessage(String to, String content) {
         MessageCreateDTO messageCreateDTO = new MessageCreateDTO();
         messageCreateDTO.setContent(content);
-        messageCreateDTO.setToId(to);
+        messageCreateDTO.setToEmail(to);
         return messageCreateDTO;
     }
 
-    public List<MessageCreateDTO> generateMessages(Long to, String base, int amount) {
+    public List<MessageCreateDTO> generateMessages(String to, String base, int amount) {
         return range(amount)
                 .map(i -> generateMessage(to, base + i))
                 .toList();

@@ -7,6 +7,6 @@ import lombok.Data;
 @Schema(description = "A JSON object containing message's content as string " +
         "and receiving user's id")
 public class MessageCreateDTO {
-    private Long toId;
+    private String toEmail;
     private String content;
 }
