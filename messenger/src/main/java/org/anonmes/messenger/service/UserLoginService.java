@@ -24,4 +24,11 @@ public class UserLoginService implements UserDetailsService {
         }
         return user.map(UserLogin::new).get();
     }
+
+    // Save the external user to the database
+    public User saveUser(UserDetails user) {
+        User newUser = new User();
+        newUser.setEmail(user.getUsername());
+        return userRepository.save(newUser);
+    }
 }

@@ -28,6 +28,13 @@ public class UserLogin implements UserDetails {
                 .collect(Collectors.toList());
     }
 
+    public UserLogin(String userName) {
+        this.userName = userName;
+        this.password = null;
+        this.active = true;
+        this.authorities = List.of();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
