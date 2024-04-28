@@ -21,7 +21,7 @@ export default function Page() {
                     <div className="w-16 h-16 border-2 border-black rounded m-4 p-2">
                         <Image
                             src="/logo-anonmes.png"
-                            alt="Google"
+                            alt="Anonmes"
                             width={100}
                             height={60}
                             layout="fixed"
