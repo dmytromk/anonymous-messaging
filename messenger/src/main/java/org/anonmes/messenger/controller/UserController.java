@@ -30,14 +30,12 @@ public class UserController {
             summary = "Create a new user",
             description = "Create a new user, given their name, email and password.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation",
+            @ApiResponse(responseCode = "201", description = "successful operation",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserResponseDTO.class))
                     }),
             @ApiResponse(responseCode = "400", description = "invalid parameters",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UserResponseDTO.class))
-                    })
+                    content = @Content)
     })
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserCreateDTO user) {
@@ -85,11 +83,10 @@ public class UserController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserResponseDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UserResponseDTO.class))}),
+                    content = @Content
+            ),
             @ApiResponse(responseCode = "404", description = "User not found",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UserResponseDTO.class))})
+                    content = @Content)
     })
     @PutMapping
     public ResponseEntity<UserResponseDTO> updateUser(@RequestBody UserUpdateNameDTO user) {

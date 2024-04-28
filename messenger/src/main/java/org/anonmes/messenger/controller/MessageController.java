@@ -36,11 +36,9 @@ public class MessageController {
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))}),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied",
-                    content = {@Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))}),
+                    content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found",
-                    content = {@Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))})
+                    content = @Content)
     })
     @GetMapping("/{receiver_id}")
     public List<MessageResponseDTO> getAllMessagesByReceiver(@PathVariable Long receiver_id) {
@@ -56,11 +54,9 @@ public class MessageController {
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))}),
             @ApiResponse(responseCode = "400", description = "Invalid parameters supplied",
-                    content = {@Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))}),
+                    content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found or page not found",
-                    content = {@Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = MessageResponseDTO.class)))})
+                    content = @Content)
     })
     @GetMapping("/{receiver_id}/pages")
     public List<MessageResponseDTO> getAllMessagesByReceiver(@PathVariable Long receiver_id,
@@ -76,9 +72,9 @@ public class MessageController {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponseDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid parameters supplied",
-                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponseDTO.class))}),
+                    content = @Content),
             @ApiResponse(responseCode = "404", description = "User(s) not found",
-                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = MessageResponseDTO.class))})
+                    content = @Content)
     })
     @PostMapping("/{sender_id}")
     public MessageResponseDTO postMessage(@PathVariable Long sender_id,

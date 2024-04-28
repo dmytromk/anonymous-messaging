@@ -40,8 +40,7 @@ public class AuthenticationController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = AuthenticationResponseDTO.class))}),
             @ApiResponse(responseCode = "401", description = "Incorrect email or password supplied",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = AuthenticationResponseDTO.class))})
+                    content = @Content)
     })
     @PostMapping(value = "/authenticate")
     public AuthenticationResponseDTO createAuthenticationToken(
