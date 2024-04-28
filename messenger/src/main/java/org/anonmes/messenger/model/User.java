@@ -21,6 +21,8 @@ public class User {
     @Column(name= "email")
     private String email;
     @Column(name = "created_at")
+
+    @OrderBy
     @EqualsAndHashCode.Exclude
     private LocalDateTime createdAt;
     
