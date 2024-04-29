@@ -32,7 +32,7 @@ services:
       - 3000:3000
 
   keycloak:
-    image: quay.io/keycloak/keycloak:23.0.7
+    image: quay.io/keycloak/keycloak:latest
     container_name: keycloak
     ports:
       - 8888:8888
@@ -44,7 +44,6 @@ services:
       KC_DB_PASSWORD: password
 
       keycloak.url: http://keycloak:8888
-
       KC_HOSTNAME: localhost
       KC_HOSTNAME_PORT: 8888
       HOSTNAME_STRICT: false
