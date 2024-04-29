@@ -32,8 +32,10 @@ services:
       - 3000:3000
 
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:24.0.3
     container_name: keycloak
+    volumes:
+      - ./keycloak_imports/realm.json:/opt/keycloak/data/import/realm.json
     ports:
       - 8888:8888
       - 8443:8443
@@ -57,7 +59,9 @@ services:
       KC_HEALTH_ENABLED: true
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-    command: [start-dev, --http-port=8888]
+    command: [start-dev, --http-port=8888, --import-realm]
+
+    restart: always
     depends_on:
       - keycloak_db
 
