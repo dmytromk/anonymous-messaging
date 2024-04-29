@@ -27,7 +27,15 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
                     email: user.email,
                     image: user.image
                 };
+            }
 
+            return token;
+        },
+    },
+    secret: process.env.NEXTAUTH_SECRET,
+    events: {
+        signIn: async ({ user, account }) => {
+            if (account && user) {
                 res.setHeader('Set-Cookie',
                     serialize('anon_access_token', String(account.access_token), {
                         httpOnly: true,
@@ -37,11 +45,8 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
                     }));
                 res.redirect('/messages');
             }
-
-            return token;
-        },
-    },
-    secret: process.env.NEXTAUTH_SECRET,
+        }
+    }
 }
 )};
 
