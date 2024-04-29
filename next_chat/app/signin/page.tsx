@@ -2,73 +2,61 @@
 import Link from "next/link";
 import Image from 'next/image';
 import axios from "axios";
-import Cookies from 'js-cookie';
-import { signIn } from 'next-auth/react';
+import {signIn } from "next-auth/react";
 export default function Page() {
     const handleGoogle = async () => {
         signIn('google')
     };
 
     const handleAnon = async () => {
-        try {
-            const response = await axios.post('http://localhost:8080/login',
-                {
-                    "email": "mail@gmail.com",
-                    "password": "mailmail"
-                });
-            if (response.status === 200) {
-                const jwt = response.data.jwt;
+        const response = axios.get("http://localhost:8080/validate-token",{
+            withCredentials: true } )
+        console.log(response);
+    }
 
-                Cookies.set('annon_jwt', jwt, { expires: 7 });
-                console.log('JWT stored in cookies');
-            }
-        } catch (error) {
-            console.error('Login failed:', error);
-        }
-    };
 
     return (
-        <main className="flex flex-col w-full h-[80vh] items-center justify-center mx-auto p-4 ">
-            <h1 className="text-3xl font-bold mb-4">Sign in</h1>
-            <div className="flex flex-col">
-                <div className="flex flex-row">
-                    <div className="w-16 h-16 border-2 border-black rounded m-4 p-2">
-                        <button onClick={handleGoogle}>
-                        <Image
-                            src="logo-google.svg"
-                            alt="Google"
-                            width={100}
-                            height={60}
-                            layout="fixed"
-                            className="bg-white"
-                        />
-                        </button>
-                    </div>
-                    <div className="w-16 h-16 border-2 border-black rounded m-4 p-2">
-                        <button onClick={handleAnon}>
+            <main className="flex flex-col w-full h-[80vh] items-center justify-center mx-auto p-4 ">
+                <h1 className="text-3xl font-bold mb-4">Sign in</h1>
+                <div className="flex flex-col">
+                    <div className="flex flex-row">
+                        <div className="w-16 h-16 border-2 border-black rounded m-4 p-2">
+                            <button onClick={handleGoogle}>
                             <Image
-                                src="/logo-anonmes.png"
-                                alt="Anonmes"
+                                src="logo-google.svg"
+                                alt="Google"
                                 width={100}
                                 height={60}
                                 layout="fixed"
                                 className="bg-white"
                             />
-                        </button>
+                            </button>
+                        </div>
+                        <div className="w-16 h-16 border-2 border-black rounded m-4 p-2">
+                            <button onClick={handleAnon}>
+                                <Image
+                                    src="/logo-anonmes.png"
+                                    alt="Anonmes"
+                                    width={100}
+                                    height={60}
+                                    layout="fixed"
+                                    className="bg-white"
+                                />
+                            </button>
+                        </div>
+                    </div>
+                    <div className="mx-4">
+                        <div className="w-full h-12 border-2 border-black rounded flex justify-center items-center font-bold">
+                            Incognito Mode
+                        </div>
                     </div>
                 </div>
-                <div className="mx-4">
-                    <div className="w-full h-12 border-2 border-black rounded flex justify-center items-center font-bold">
-                        Incognito Mode
-                    </div>
+                <div className="pt-16 text-blue-500">
+                    <Link href="/signup">
+                        Sign up
+                    </Link>
                 </div>
-            </div>
-            <div className="pt-16 text-blue-500">
-                <Link href="/signup">
-                    Sign up
-                </Link>
-            </div>
 
-        </main>
+            </main>
     );
 }
