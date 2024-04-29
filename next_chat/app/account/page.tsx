@@ -6,6 +6,12 @@ export default function Page() {
 
     const [registrationType, setRegistrationType] = useState('local');
     const [username, setUsername] = useState('User');
+    const handleLogout = async () => {
+        const response = await fetch('/api/auth/logout');
+        if (response.redirected) {
+            window.location.href = response.url;
+        }
+    };
 
     return (
         <main className="container mx-auto p-4">
@@ -21,7 +27,9 @@ export default function Page() {
                         You logged in using {registrationType}
                     </p>
                 )}
-                <button className="w-32 my-4 h-12 text-center text-white font-bold bg-red-500 hover:bg-red-600 rounded flex justify-center items-center">
+                <button
+                    onClick={handleLogout}
+                    className="w-32 my-4 h-12 text-center text-white font-bold bg-red-500 hover:bg-red-600 rounded flex justify-center items-center">
                     Log out
                 </button>
                 <Link href="/messages">
