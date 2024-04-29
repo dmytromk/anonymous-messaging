@@ -35,9 +35,10 @@ public class WebSecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/**").permitAll();
-                    // auth.requestMatchers("users").permitAll();
-                    // auth.anyRequest().authenticated();
+                    auth.requestMatchers("/login").permitAll();
+                    auth.requestMatchers("login/google");
+                    auth.requestMatchers("register");
+                    auth.anyRequest().authenticated();
                 })
                 .logout(lOut -> {
                      lOut.invalidateHttpSession(true)
@@ -47,14 +48,14 @@ public class WebSecurityConfig {
                     .logoutSuccessUrl("/login?logout")
                     .permitAll();
                 })
-                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .oauth2Login(oauth->{
-                    oauth.successHandler(googleOAuth2AuthenticationSuccessHandler);
-                    oauth.failureHandler(new
-                            SimpleUrlAuthenticationFailureHandler("/login?error=true"));
-                })
-                //.httpBasic(Customizer.withDefaults());
+                // .oauth2Login(oauth->{
+                //    oauth.successHandler(googleOAuth2AuthenticationSuccessHandler);
+                //    oauth.failureHandler(new
+                //            SimpleUrlAuthenticationFailureHandler("/login?error=true"));
+                // })
+                // .httpBasic(Customizer.withDefaults());
                 .formLogin(Customizer.withDefaults());
 
         return http.build();
