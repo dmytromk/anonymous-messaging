@@ -3,19 +3,10 @@ import Link from "next/link";
 import Image from 'next/image';
 import axios from "axios";
 import Cookies from 'js-cookie';
+import { signIn } from 'next-auth/react';
 export default function Page() {
     const handleGoogle = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/login/google');
-            if (response.status === 200) {
-                const jwt = response.data.jwt;
-
-                Cookies.set('annon_jwt', jwt, { expires: 7 });
-                console.log('JWT stored in cookies');
-            }
-        } catch (error) {
-            console.error('Login failed:', error);
-        }
+        signIn('google')
     };
 
     const handleAnon = async () => {
