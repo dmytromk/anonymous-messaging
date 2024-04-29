@@ -30,7 +30,6 @@ import java.util.Optional;
 @AllArgsConstructor
 @Tag(name = "Authentication", description = "Auth API")
 public class AuthenticationController {
-    private final AuthenticationManager authenticationManager;
     private final UserCredentialsService userCredentialsService;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
@@ -52,9 +51,9 @@ public class AuthenticationController {
             @RequestBody LoginPasswordAuthenticationRequestDTO authenticationRequest) throws Exception {
 
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    authenticationRequest.getEmail(),
-                    authenticationRequest.getPassword()));
+            // authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+            //        authenticationRequest.getEmail(),
+            //        authenticationRequest.getPassword()));
         } catch (Exception e) {
             throw new Exception("Invalid username or password", e);
         }
