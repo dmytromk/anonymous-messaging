@@ -6,15 +6,11 @@ import io.jsonwebtoken.security.SignatureException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -46,10 +42,13 @@ public class TokenValidationController {
             summary = "Validate token",
             description = "Validate access token")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+            content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "401", description = "Token is invalid due to signature or some other error",
+                    content = @Content(mediaType = "application/json")),
     })
     @GetMapping("/validate")
-    public Map<String, Object> validateToken(
+    public ResponseEntity<Map<String, Object>> validateToken(
             @Parameter(description = "Access token")
             @RequestParam String token
     ) {
@@ -68,14 +67,19 @@ public class TokenValidationController {
                 // if (refreshToken != null && !refreshToken.isEmpty()) {
                 //     accessToken = refreshToken(accessToken, refreshToken, provider);
                 // }
-                return Map.of("status", "Token is invalid");
+                return ResponseEntity.status(HttpStatusCode.valueOf(401))
+                        .body(Map.of("status", "Token is invalid"));
             }
 
-            return Map.of("status", "Token is valid", "decoded", claims);
+            return ResponseEntity.ok(Map.of("status", "Token is valid", "decoded", claims));
         } catch (SignatureException ex) {
-            return Map.of("status", "Token is invalid due to signature error");
+            return ResponseEntity
+                    .status(HttpStatusCode.valueOf(401))
+                    .body(Map.of("status", "Token is invalid due to signature error"));
         } catch (Exception ex) {
-            return Map.of("status", "Token is invalid due to error: " + ex.getMessage());
+            return ResponseEntity
+                    .status(HttpStatusCode.valueOf(401))
+                    .body(Map.of("status", "Token is invalid due to error: " + ex.getMessage()));
         }
     }
 
