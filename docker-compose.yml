@@ -21,6 +21,10 @@ services:
       DATASOURCE_URL: jdbc:postgresql://server_db:5433/anonmes
       DATASOURCE_USERNAME: postgres
       DATASOURCE_PASSWORD: local
+
+      KEYCLOAK_CLIENT_ID: anonmes
+      KEYCLOAK_SECRET: jikvp5fJQE7yOl6723o2ewb9PYIXDDbK
+
       APP_SECRET: local
 
   client:
@@ -32,8 +36,10 @@ services:
       - 3000:3000
 
   keycloak:
-    image: quay.io/keycloak/keycloak:23.0.7
+    image: quay.io/keycloak/keycloak:24.0.3
     container_name: keycloak
+    volumes:
+      - ./keycloak_imports/realm.json:/opt/keycloak/data/import/realm.json
     ports:
       - 8888:8888
       - 8443:8443
@@ -44,7 +50,6 @@ services:
       KC_DB_PASSWORD: password
 
       keycloak.url: http://keycloak:8888
-
       KC_HOSTNAME: localhost
       KC_HOSTNAME_PORT: 8888
       HOSTNAME_STRICT: false
@@ -58,7 +63,9 @@ services:
       KC_HEALTH_ENABLED: true
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-    command: [start-dev, --http-port=8888]
+    command: [start-dev, --http-port=8888, --import-realm]
+
+    restart: always
     depends_on:
       - keycloak_db
 
