@@ -9,7 +9,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
             expires: new Date(0),
             path: '/'
         }),
-        serialize('anon_request_token', '', {
+        serialize('anon_incognito', '', {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
             expires: new Date(0),
