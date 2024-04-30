@@ -1,7 +1,6 @@
 'use client'
 import Link from "next/link";
 import Image from 'next/image';
-import axios from "axios";
 import {signIn } from "next-auth/react";
 export default function Page() {
     const handleGoogle = async () => {
@@ -9,9 +8,7 @@ export default function Page() {
     };
 
     const handleAnon = async () => {
-        const response = axios.get("http://localhost:8080/validate-token",{
-            withCredentials: true } )
-        console.log(response);
+        signIn('keycloak')
     }
     const handleIncognito = async () => {
         const response = await fetch('/api/auth/incognito');
