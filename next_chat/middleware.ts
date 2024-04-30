@@ -47,7 +47,7 @@ async function validateToken(token: string) {
         const data = await response.json();
         return {
             isValid: data && data.status !== "Token is invalid",
-            headers: response.headers  // Pass headers for further processing
+            headers: response.headers
         };
     } catch (error) {
         console.error('Error validating token:', error);
