@@ -13,7 +13,12 @@ export default function Page() {
             withCredentials: true } )
         console.log(response);
     }
-
+    const handleIncognito = async () => {
+        const response = await fetch('/api/auth/incognito');
+        if (response.redirected) {
+            window.location.href = response.url;
+        }
+    };
 
     return (
             <main className="flex flex-col w-full h-[80vh] items-center justify-center mx-auto p-4 ">
@@ -46,9 +51,10 @@ export default function Page() {
                         </div>
                     </div>
                     <div className="mx-4">
-                        <div className="w-full h-12 border-2 border-black rounded flex justify-center items-center font-bold">
+                        <button className="w-full h-12 border-2 border-black rounded flex justify-center items-center font-bold"
+                        onClick={handleIncognito}>
                             Incognito Mode
-                        </div>
+                        </button>
                     </div>
                 </div>
                 <div className="pt-16 text-blue-500">
