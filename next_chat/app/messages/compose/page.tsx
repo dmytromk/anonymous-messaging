@@ -1,5 +1,5 @@
 'use client'
-import {SendMessage} from "@/data/Message";
+import {SendMessage} from "@/data/defines";
 import {FormEvent, useState} from "react";
 import axios from "axios";
 import Link from "next/link";

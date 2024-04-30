@@ -1,14 +1,16 @@
 'use client'
 import {useEffect, useState} from "react";
-import {Message} from "@/data/Message";
-import {fetchMessages} from "@/data/fetch/fetchData";
+import {Message, User} from "@/data/defines";
+import {fetchMessages, fetchUser} from "@/data/fetch/fetchData";
 import FloatingButton from "@/ui/button/floating";
 import Link from "next/link";
 
 
 export default function Page() {
     const [messages, setMessages] = useState<Message[]>([]);
-
+    const [user, setUser] = useState<User | null>(null)
+    const [error, setError] = useState<String>("");
+    const [error2, setError2] = useState<String>("");
     useEffect(() => {
         const loadMessages = async () => {
             try {
@@ -16,17 +18,49 @@ export default function Page() {
                 setMessages(fetchedMessages);
             } catch (error) {
                 console.error('Failed to fetch messages:', error);
+                setError("Error loading messages!")
             }
         };
+        const loadUser = async () => {
+            try {
+                const fetchedUser = await fetchUser();
+                setUser(fetchedUser);
+            } catch (error) {
+                console.error('Failed to fetch user:', error);
+                setError2("Error loading user!")
+            }
+        }
 
         loadMessages();
+        loadUser();
     }, []);
+    if (error || error2) {
+        return (
+            <main className="p-8">
+                <FloatingButton />
+                <div className="flex items-center flex-row justify-between w-full px-16">
+                    <Link href="/" className="text-blue-600">Back</Link>
+                    <h1 className=" text-3xl font-bold">Your Messages</h1>
+                    <Link href="/account" className="text-blue-600">Account</Link>
+                </div>
+                <div className="flex flex-row w-full justify-center pb-32">
+                    <div className="flex flex-col w-[90vw]">
+                        <p className="text-red-600" >{error}</p>
+                        <p className="text-red-600" >{error2}</p>
+                    </div>
+                </div>
+            </main>
+        )
+    }
     return (
         <main className="p-8">
             <FloatingButton />
             <div className="flex items-center flex-row justify-between w-full px-16">
                 <Link href="/" className="text-blue-600">Back</Link>
-                <h1 className=" text-3xl font-bold">Your Messages</h1>
+                <div>
+                    <h1 className=" text-3xl font-bold">Your Messages</h1>
+                    <p>{user?.name}</p>
+                </div>
                 <Link href="/account" className="text-blue-600">Account</Link>
             </div>
             <div className="flex flex-row w-full justify-center pb-32">

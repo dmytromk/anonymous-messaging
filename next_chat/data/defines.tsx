@@ -9,3 +9,10 @@ export interface SendMessage {
     toEmail: string,
     content: string
 }
+
+export interface User {
+    id: number,
+    name: string,
+    email: string,
+    createdAt: Date
+}
