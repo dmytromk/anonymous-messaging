@@ -39,6 +39,7 @@ services:
       GOOGLE_CLIENT_ID: 634385362994-230hbtkhlepi0qrpjdscsq1jbe6e1rmh.apps.googleusercontent.com
       GOOGLE_CLIENT_SECRET: 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
       NEXTAUTH_URL: http://localhost:3000
+      NEXT_PUBLIC_API_URL: http://localhost:3000
       NEXTAUTH_SECRET: 232390jakpffnldhi3nvPAnrbuidda0334h04-3234324
       JWT_SECRET: askfj-dskfSJ23-SSADSXX_d34032et3453-XX44S
       KEYCLOAK_CLIENT_ID: anonmes
