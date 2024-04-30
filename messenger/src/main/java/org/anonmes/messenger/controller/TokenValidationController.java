@@ -3,6 +3,13 @@ package org.anonmes.messenger.controller;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.SignatureException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,9 +27,10 @@ import java.util.Map;
 @CrossOrigin(
         origins = "http://localhost:3000",
         methods = {RequestMethod.GET, RequestMethod.OPTIONS, RequestMethod.DELETE, RequestMethod.POST, RequestMethod.PUT},
-        maxAge=3600
+        maxAge = 3600
 
 )
+@Tag(name = "Validation", description = "Access Token Validation API")
 public class TokenValidationController {
 
     @Value("${JWT_SECRET}")
@@ -34,8 +42,17 @@ public class TokenValidationController {
     @Value("${KEYCLOAK_CLIENT_ID}")
     private String keyCloakClientId;
 
+    @Operation(
+            summary = "Validate token",
+            description = "Validate access token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+    })
     @GetMapping("/validate")
-    public Map<String, Object> validateToken(@RequestParam String token) {
+    public Map<String, Object> validateToken(
+            @Parameter(description = "Access token")
+            @RequestParam String token
+    ) {
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(jwtSecret.getBytes())
@@ -48,9 +65,9 @@ public class TokenValidationController {
             // String refreshToken = (String) payload.get("refresh_token");
 
             if (!isTokenValid(provider, accessToken)) {
-               // if (refreshToken != null && !refreshToken.isEmpty()) {
-               //     accessToken = refreshToken(accessToken, refreshToken, provider);
-               // }
+                // if (refreshToken != null && !refreshToken.isEmpty()) {
+                //     accessToken = refreshToken(accessToken, refreshToken, provider);
+                // }
                 return Map.of("status", "Token is invalid");
             }
 
@@ -64,7 +81,7 @@ public class TokenValidationController {
 
     private boolean isTokenValid(String provider, String accessToken) {
         if (provider.equals("google")) {
-            String result = sendGoogleValidationRequest("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token="+accessToken);
+            String result = sendGoogleValidationRequest("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=" + accessToken);
             return !(result.contains("\"error\": \"invalid_token\""));
         } else if (provider.equals("keycloak")) {
             String result = sendKeycloakValidationRequest(accessToken);
