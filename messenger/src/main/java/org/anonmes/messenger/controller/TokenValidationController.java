@@ -76,7 +76,7 @@ public class TokenValidationController {
     private String sendKeycloakValidationRequest(String accessToken) {
         String clientId = keyCloakClientId;
         String clientSecret = keyCloakSecret;
-        String introspectionUrl = "http://localhost:8180/realms/master/protocol/openid-connect/token/introspect";
+        String introspectionUrl = "http://localhost:8888/realms/master/protocol/openid-connect/token/introspect";
 
         RestTemplate restTemplate = new RestTemplate();
 

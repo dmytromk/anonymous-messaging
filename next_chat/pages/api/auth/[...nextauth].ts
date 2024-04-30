@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken'
 const googleClient = process.env.GOOGLE_CLIENT_ID!
 const googleSecret = process.env.GOOGLE_CLIENT_SECRET!
 
-const keycloakClient = process.env.KEYCLOAK_ID!
+const keycloakClient = process.env.KEYCLOAK_CLIENT_ID!
 const keycloakSecret = process.env.KEYCLOAK_SECRET!
 
 const jwtSecret = process.env.JWT_SECRET!;
@@ -30,7 +30,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
         KeycloakProvider({
             clientId: keycloakClient,
             clientSecret: keycloakSecret,
-            issuer: "anonmes",
+            issuer: "http://localhost:8888/realms/anonmes",
             authorization: {
                 params: {
                     access_type: 'offline',
